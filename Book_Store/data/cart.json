@@ -1,0 +1,75 @@
+{
+  "admin": [
+    {
+      "id": "665fef23-8e46-4714-b35a-a8491d75f253",
+      "title": "shawqiii",
+      "price": 500,
+      "description": "500 later\r\n",
+      "stock": 129,
+      "quantity": 8
+    },
+    {
+      "id": "cc9f1557-c6db-4411-ba91-14c76d112bb3",
+      "title": "malti",
+      "price": 600,
+      "description": "malti",
+      "stock": 50,
+      "quantity": 2
+    }
+  ],
+  "satamone22": [
+    {
+      "id": "4b03948d-b449-4168-960b-ca9a2104b5ea",
+      "title": "WWWWW",
+      "price": 2222,
+      "description": "WW",
+      "stock": 2,
+      "quantity": 1
+    },
+    {
+      "id": "665fef23-8e46-4714-b35a-a8491d75f253",
+      "title": "shawqiii",
+      "price": 500,
+      "description": "500 later\r\n",
+      "stock": 130,
+      "quantity": 9
+    }
+  ],
+  "naser55": [],
+  "shawqi99": [
+    {
+      "id": "665fef23-8e46-4714-b35a-a8491d75f253",
+      "title": "shawqiii",
+      "price": 500,
+      "description": "500 later\r\n",
+      "stock": 110,
+      "quantity": 1
+    }
+  ],
+  "zena2": [
+    {
+      "id": "665fef23-8e46-4714-b35a-a8491d75f253",
+      "title": "shawqiii",
+      "price": 500,
+      "description": "500 later\r\n",
+      "stock": 112,
+      "quantity": 4
+    },
+    {
+      "id": "cc9f1557-c6db-4411-ba91-14c76d112bb3",
+      "title": "malti",
+      "price": 600,
+      "description": "malti",
+      "stock": 48,
+      "quantity": 3
+    },
+    {
+      "id": "26f07249-c131-47f7-acc2-264b0644b5b7",
+      "title": "arabi",
+      "price": 20,
+      "description": "arabi",
+      "stock": 20,
+      "quantity": 5
+    }
+  ]
+}

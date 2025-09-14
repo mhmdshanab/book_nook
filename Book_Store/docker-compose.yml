@@ -1,0 +1,56 @@
+version: '3.8'
+
+services:
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - app
+    restart: unless-stopped
+    networks:
+      - bookstore-network
+
+  app:
+    build: .
+    expose:
+      - "3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - MONGODB_URI=mongodb://mongo:27017/book_store
+      - JWT_SECRET=your_jwt_secret_here
+      - STRIPE_SECRET_KEY=your_stripe_secret_key
+      - STRIPE_PUBLISHABLE_KEY=your_stripe_publishable_key
+      - STRIPE_WEBHOOK_SECRET=your_webhook_secret_here
+      - EMAIL_USER=your_email@gmail.com
+      - EMAIL_PASS=your_app_password
+      - SESSION_SECRET=your_session_secret
+    depends_on:
+      - mongo
+    restart: unless-stopped
+    networks:
+      - bookstore-network
+
+  mongo:
+    image: mongo:6.0
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_DATABASE=book_store
+    volumes:
+      - mongo_data:/data/db
+    restart: unless-stopped
+    networks:
+      - bookstore-network
+
+volumes:
+  mongo_data:
+
+networks:
+  bookstore-network:
+    driver: bridge 

@@ -1,0 +1,97 @@
+version: '3.8'
+
+services:
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
+      - nginx_logs:/var/log/nginx
+    depends_on:
+      - app
+      - frontend
+    restart: unless-stopped
+    networks:
+      - bookstore-network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.bookstore.rule=Host(`yourdomain.com`)"
+      - "traefik.http.routers.bookstore.entrypoints=websecure"
+      - "traefik.http.routers.bookstore.tls.certresolver=letsencrypt"
+
+  frontend:
+    build: ../Front_React
+    expose:
+      - "80"
+    restart: unless-stopped
+    networks:
+      - bookstore-network
+
+  app:
+    build: .
+    expose:
+      - "3000"
+    env_file:
+      - production.env
+    depends_on:
+      - mongo
+    restart: unless-stopped
+    networks:
+      - bookstore-network
+    volumes:
+      - app_logs:/app/logs
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  mongo:
+    image: mongo:6.0
+    expose:
+      - "27017"
+    environment:
+      - MONGO_INITDB_DATABASE=book_store
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=your_secure_password_here
+    volumes:
+      - mongo_data:/data/db
+      - mongo_logs:/var/log/mongodb
+    restart: unless-stopped
+    networks:
+      - bookstore-network
+    command: mongod --auth --bind_ip_all
+
+  redis:
+    image: redis:7-alpine
+    expose:
+      - "6379"
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+    networks:
+      - bookstore-network
+    command: redis-server --appendonly yes
+
+volumes:
+  mongo_data:
+    driver: local
+  mongo_logs:
+    driver: local
+  app_logs:
+    driver: local
+  nginx_logs:
+    driver: local
+  redis_data:
+    driver: local
+
+networks:
+  bookstore-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16

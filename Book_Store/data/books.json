@@ -1,0 +1,66 @@
+[
+  {
+    "id": "665fef23-8e46-4714-b35a-a8491d75f253",
+    "title": "shawqiii",
+    "price": 500,
+    "description": "500 later\r\n",
+    "stock": 108,
+    "image": "/uploads/images/default-book-1.jpg"
+  },
+  {
+    "id": "aade244e-92ab-4a5d-9e94-2f8f6f3980d0",
+    "title": "som",
+    "price": 520,
+    "description": "sss",
+    "stock": 0,
+    "image": "/uploads/images/default-book-2.jpg"
+  },
+  {
+    "id": "4b2240f2-4afa-4df5-8113-19f90e495b18",
+    "title": "moh",
+    "description": "moha",
+    "price": 500,
+    "stock": -1,
+    "image": "/uploads/images/default-book-3.jpg"
+  },
+  {
+    "id": "638fd6ab-25d5-4bee-84f3-a6b52a1ac2ed",
+    "title": "mmmmmm",
+    "price": 5,
+    "description": "mmmmm",
+    "stock": 0,
+    "image": "/uploads/images/default-book-1.jpg"
+  },
+  {
+    "id": "f2c19467-dc15-46c5-917a-787ef634876a",
+    "title": "mooh",
+    "price": 600,
+    "description": "moh",
+    "stock": 0,
+    "image": "/uploads/images/default-book-2.jpg"
+  },
+  {
+    "id": "4b03948d-b449-4168-960b-ca9a2104b5ea",
+    "title": "WWWWW",
+    "price": 2222,
+    "description": "WW",
+    "stock": 0,
+    "image": "/uploads/images/default-book-3.jpg"
+  },
+  {
+    "id": "cc9f1557-c6db-4411-ba91-14c76d112bb3",
+    "title": "malti",
+    "price": 600,
+    "description": "malti",
+    "stock": 45,
+    "image": "/uploads/images/default-book-1.jpg"
+  },
+  {
+    "id": "26f07249-c131-47f7-acc2-264b0644b5b7",
+    "title": "arabi",
+    "price": 20,
+    "description": "arabi",
+    "stock": 15,
+    "image": "/uploads/images/default-book-2.jpg"
+  }
+]

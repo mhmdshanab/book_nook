@@ -1,0 +1,52 @@
+[
+  {
+    "username": "admin",
+    "password": "123456",
+    "isAdmin": true
+  },
+  {
+    "username": "satamone22",
+    "password": "0599708022",
+    "firstName": "mhmd",
+    "lastName": "mahmoud",
+    "email": "mhmd@gmail.com",
+    "phone": "0599708022",
+    "isAdmin": false
+  },
+  {
+    "username": "naser55",
+    "password": "0599708022",
+    "firstName": "naser",
+    "lastName": "MAHMOUD",
+    "email": "naser@gmail.com",
+    "phone": "0599708022",
+    "isAdmin": false
+  },
+  {
+    "username": "shawqi99",
+    "password": "0599708022",
+    "firstName": "shawqi",
+    "lastName": "mohammed",
+    "email": "shawqi@gmail.com",
+    "phone": "0599708022",
+    "isAdmin": false
+  },
+  {
+    "username": "ahmed33",
+    "password": "0599708022",
+    "firstName": "ahmed",
+    "lastName": "mahmoud",
+    "email": "ahmed@gmail.com",
+    "phone": "0599708022",
+    "isAdmin": false
+  },
+  {
+    "username": "zena2",
+    "password": "0599708022",
+    "firstName": "zena",
+    "lastName": "ahmed",
+    "email": "zena@gmail.com",
+    "phone": "0599708022",
+    "isAdmin": false
+  }
+]
