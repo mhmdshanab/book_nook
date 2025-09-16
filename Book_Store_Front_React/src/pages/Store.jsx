@@ -29,13 +29,13 @@ const Store = () => {
                 </ul>
                 <p className="address mb-5">
                   <em>
-                    <strong>1116 Orchard Street</strong><br />
-                    Golden Valley, Minnesota
+                    <strong>Gaza , Khan Younis </strong><br />
+                    Al-Nasser , Meraj
                   </em>
                 </p>
                 <p className="mb-0">
                   <small><em>Call Anytime</em></small><br />
-                  (317) 585-8468
+                  (+970) 599708022
                 </p>
               </div>
             </div>

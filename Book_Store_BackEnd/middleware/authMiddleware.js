@@ -33,7 +33,7 @@ function verifyTokenMiddleware(req, res) {
 
 // ✅ يتأكد من أن المستخدم مسجّل دخول
 function requireAuth (req, res, next) {
-  const user = verifyTokenMiddleware(req);
+  const user = verifyTokenMiddleware(req, res);
   if (!user) { 
     console.log("🔒 Access denied: user not authenticated.");
     return res.redirect('/login?expired=1');

@@ -83,7 +83,7 @@ const Layout = ({ children }) => {
 
       <footer className="footer text-faded text-center py-5">
         <div className="container">
-          <p className="m-0 small">Copyright &copy; Your Website 2023</p>
+          <p className="m-0 small">Copyright &copy; MhmdShanab 2025</p>
         </div>
       </footer>
     </>

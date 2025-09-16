@@ -23,7 +23,7 @@ services:
       - "traefik.http.routers.bookstore.tls.certresolver=letsencrypt"
 
   frontend:
-    build: ../Front_React
+    build: ../Book_Store_Front_React
     expose:
       - "80"
     restart: unless-stopped

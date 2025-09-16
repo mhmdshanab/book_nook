@@ -13,7 +13,7 @@ const About = () => {
                   <span className="section-heading-upper">A Love for Books</span>
                   <span className="section-heading-lower">About Our Bookstore</span>
                 </h2>
-                <p>Founded in 1987 by the Hernandez family, our bookstore has been connecting readers with unforgettable stories and ideas.</p>
+                <p>Founded in 2025 by the Abu Shanab family, our library connects readers with unforgettable stories and ideas.</p>
                 <p className="mb-0">We believe the right book can change your day—or your life.</p>
               </div>
             </div>
