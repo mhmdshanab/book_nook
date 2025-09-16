@@ -19,10 +19,18 @@ const app = express();
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// 🌐 CORS for React dev server
-const FRONTEND_ORIGIN = process.env.FRONTEND_ORIGIN || 'http://localhost:5173';
+// 🌐 CORS for frontend (supports multiple comma-separated origins)
+const FRONTEND_ORIGINS = (process.env.FRONTEND_ORIGINS || process.env.FRONTEND_ORIGIN || 'http://localhost:5173')
+  .split(',')
+  .map((o) => o.trim())
+  .filter(Boolean);
+
 app.use(cors({
-  origin: FRONTEND_ORIGIN,
+  origin: (origin, callback) => {
+    if (!origin) return callback(null, true); // allow server-to-server or curl
+    const isAllowed = FRONTEND_ORIGINS.some((allowed) => allowed === origin);
+    return callback(null, isAllowed ? origin : false);
+  },
   credentials: true,
 }));
 
