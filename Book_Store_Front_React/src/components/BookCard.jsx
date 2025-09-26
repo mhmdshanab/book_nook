@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+const API_BASE = import.meta.env.VITE_API_URL || '';
 
 const BookCard = ({ book, isAdmin, onAdd, onDelete, onEdit }) => {
   const [editing, setEditing] = useState(false);
@@ -19,8 +20,8 @@ const BookCard = ({ book, isAdmin, onAdd, onDelete, onEdit }) => {
         alert('Please select an image file');
         return;
       }
-      if (file.size > 5 * 1024 * 1024) {
-        alert('File size must be less than 5MB');
+      if (file.size > 20 * 1024 * 1024) {
+        alert('File size must be less than 20MB');
         return;
       }
       setImageFile(file);
@@ -48,7 +49,7 @@ const BookCard = ({ book, isAdmin, onAdd, onDelete, onEdit }) => {
     <div className="card h-100">
       <img 
         className="card-img-top" 
-        src={book.image ? (book.image.startsWith('http') ? book.image : `http://localhost:3000${book.image}`) : '/assets/img/products-01.png'} 
+        src={book.image ? (book.image.startsWith('http') ? book.image : `${API_BASE}${book.image}`) : '/assets/img/products-01.png'} 
         alt={book.title} 
         loading="lazy" 
         style={{ height: '200px', objectFit: 'cover' }} 

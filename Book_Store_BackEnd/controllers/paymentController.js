@@ -54,13 +54,18 @@ exports.createPaymentSession = async (req, res) => {
     }));
 
     // إنشاء جلسة الدفع
-    const frontendOrigin = process.env.FRONTEND_ORIGIN || `${req.protocol}://${req.get('host')}`;
+    const frontendOrigin = (
+      process.env.FRONTEND_ORIGIN ||
+      (process.env.FRONTEND_ORIGINS ? process.env.FRONTEND_ORIGINS.split(',')[0].trim() : '')
+    ) || `${req.protocol}://${req.get('host')}`;
+    const backendOrigin = `${req.protocol}://${req.get('host')}`;
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       line_items: lineItems,
       mode: 'payment',
-      success_url: `${frontendOrigin}/payment/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${frontendOrigin}/payment/cancel`,
+      // نعيد التوجيه أولاً إلى الخادم لمعالجة الطلب وتفريغ السلة
+      success_url: `${backendOrigin}/payment/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${frontendOrigin}/#/cart`,
       metadata: {
         userId: user.id,
         username: user.username,
@@ -97,7 +102,8 @@ exports.paymentSuccess = async (req, res) => {
     const { session_id } = req.query;
     
     if (!session_id) {
-      return res.redirect('/cart/allCart');
+      const frontendOrigin = process.env.FRONTEND_ORIGIN || `${req.protocol}://${req.get('host')}`;
+      return res.redirect(`${frontendOrigin}/#/products`);
     }
 
     // التحقق من جلسة الدفع
@@ -106,7 +112,7 @@ exports.paymentSuccess = async (req, res) => {
     if (session.payment_status === 'paid') {
       const user = req.user || res.locals.user;
       
-      if (user && session.metadata.cartItems) {
+      if (session.metadata && session.metadata.cartItems) {
         try {
           // تحديث المخز بناءً على العناصر المشتراة
           const cartItems = JSON.parse(session.metadata.cartItems);
@@ -121,8 +127,14 @@ exports.paymentSuccess = async (req, res) => {
              }
            }
           
-          // تفريغ السلة بعد الدفع الناجح
-          await CartItem.deleteMany({ userId: user.id });
+          // تفريغ السلة بعد الدفع الناجح بناءً على userId من الميتاداتا كمرجع موثوق
+          const targetUserId = (user && user.id) ? user.id : session.metadata.userId;
+          if (targetUserId) {
+            await CartItem.deleteMany({ userId: targetUserId });
+            console.log(`✅ Cart cleared for user ${targetUserId} after successful payment`);
+          } else {
+            console.warn('⚠️ Could not resolve userId to clear cart.');
+          }
           console.log('✅ Cart cleared after successful payment');
           
         } catch (parseError) {
@@ -130,15 +142,27 @@ exports.paymentSuccess = async (req, res) => {
         }
       }
       
-      // مع React يمكن توجيه الواجهة الأمامية بعد نجاح الدفع
-      res.redirect(`/payment/success?session_id=${session.id}`);
+      // توجيه المستخدم إلى صفحة السلة على الواجهة (HashRouter)
+      const frontendOrigin = (
+        process.env.FRONTEND_ORIGIN ||
+        (process.env.FRONTEND_ORIGINS ? process.env.FRONTEND_ORIGINS.split(',')[0].trim() : '')
+      ) || `${req.protocol}://${req.get('host')}`;
+      return res.redirect(`${frontendOrigin}/#/cart`);
     } else {
       console.log('❌ Payment not completed, status:', session.payment_status);
-      res.redirect('/cart/allCart');
+      const frontendOrigin = (
+        process.env.FRONTEND_ORIGIN ||
+        (process.env.FRONTEND_ORIGINS ? process.env.FRONTEND_ORIGINS.split(',')[0].trim() : '')
+      ) || `${req.protocol}://${req.get('host')}`;
+      return res.redirect(`${frontendOrigin}/#/cart`);
     }
   } catch (error) {
     console.error('❌ Payment success error:', error);
-    res.redirect('/cart/allCart');
+    const frontendOrigin = (
+      process.env.FRONTEND_ORIGIN ||
+      (process.env.FRONTEND_ORIGINS ? process.env.FRONTEND_ORIGINS.split(',')[0].trim() : '')
+    ) || `${req.protocol}://${req.get('host')}`;
+    return res.redirect(`${frontendOrigin}/#/cart`);
   }
 };
 
